@@ -1,0 +1,12 @@
+{
+  "name": "leetcode-problemservice",
+  "version": "1.0.0",
+  "description": "This is an admit service to manage problems of the Leetcode",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
