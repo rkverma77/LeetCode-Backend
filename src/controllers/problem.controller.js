@@ -23,10 +23,20 @@ async function addProblem(req, res, next) {
   }
 }
 
-async function getProblem(req, res) {
-  return res
-    .status(StatusCodes.NOT_IMPLEMENTED)
-    .json({ message: "Not Implemented" });
+async function getProblem(req, res , next) {
+  try {
+    // console.log(`from problem.controller : ${req.params.id}`);
+
+    const response = await problemService.getProblem(req.params.id) ; 
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: "Successfully fetched a problem",
+      err: {},
+      data: response,
+    });
+  } catch (error) {
+    next(error)
+  }
 }
 
 async function getProblems(req, res, next) {
@@ -34,7 +44,7 @@ async function getProblems(req, res, next) {
     const response = await problemService.getAllProblems();
     return res.status(StatusCodes.OK).json({
       success: true,
-      message: "Successfully fetched a new problem",
+      message: "Successfully fetched a problems",
       err: {},
       data: response,
     });
