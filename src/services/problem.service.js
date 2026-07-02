@@ -31,13 +31,23 @@ class ProblemService {
 
   async getProblem(problemId) {
     try {
-    //   console.log(`inside the problem.service : ${problemId}`);
+      //   console.log(`inside the problem.service : ${problemId}`);
 
       const problem = await this.problemRepository.getProblem(problemId);
       return problem;
     } catch (error) {
       console.log(error);
       throw error;
+    }
+  }
+
+  async deleteProblemById(problemId){
+    try {
+      const problem = await this.problemRepository.deleteProblemById(problemId);
+      return problem;
+    } catch (error) {
+      console.log(error) ; 
+      throw(error) ; 
     }
   }
 }

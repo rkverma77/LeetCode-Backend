@@ -23,11 +23,11 @@ async function addProblem(req, res, next) {
   }
 }
 
-async function getProblem(req, res , next) {
+async function getProblem(req, res, next) {
   try {
     // console.log(`from problem.controller : ${req.params.id}`);
 
-    const response = await problemService.getProblem(req.params.id) ; 
+    const response = await problemService.getProblem(req.params.id);
     return res.status(StatusCodes.OK).json({
       success: true,
       message: "Successfully fetched a problem",
@@ -35,13 +35,22 @@ async function getProblem(req, res , next) {
       data: response,
     });
   } catch (error) {
-    next(error)
+    next(error);
   }
 }
 
 async function getProblems(req, res, next) {
   try {
     const response = await problemService.getAllProblems();
+
+    // added manually : since if the record is empty -> then the response is empty array . since the db.find() return an array of documents
+    if (response.length == 0) {
+      return res.status(200).json({
+        success: true,
+        message: "No problems found",
+        data: [],
+      });
+    }
     return res.status(StatusCodes.OK).json({
       success: true,
       message: "Successfully fetched a problems",
@@ -54,10 +63,19 @@ async function getProblems(req, res, next) {
   }
 }
 
-function deleteProblem(req, res) {
-  return res
-    .status(StatusCodes.NOT_IMPLEMENTED)
-    .json({ message: "Not Implemented" });
+async function deleteProblem(req, res, next) {
+  try {
+    const response = await problemService.deleteProblemById(req.params.id);
+    return res.status(StatusCodes.OK).json({
+      success: true,
+      message: "Successfully deleted a problems",
+      err: {},
+      data: response,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
 }
 
 function updateProblem(req, res) {
